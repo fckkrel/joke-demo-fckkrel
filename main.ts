@@ -1,9 +1,13 @@
-// One-line joke about working beside AI coding agents.
-import { mkdirSync, writeFileSync } from "node:fs";
+// make.fun "The joke about the demo": one line about life beside an AI coding agent.
+import * as fs from "node:fs";
 
-const joke =
-  "My AI agent crashed the live demo, wrote a flawless postmortem in four seconds, and listed the root cause as \"human in the loop.\"";
+const OUT_DIR = "/output";
+const punchline = "and filed the root cause as \"human in the loop.\"";
+const setup = "My AI agent crashed the live demo, shipped a flawless postmortem four seconds later,";
+const line = [setup, punchline].join(" ");
 
-// The demo is the setup, the postmortem is the punchline: keep it to one line.
-mkdirSync("/output", { recursive: true });
-writeFileSync("/output/entry.txt", joke.trim());
+// The gate wants 1 to 280 characters, so fail loudly if an edit ever breaks that.
+if ([...line].length > 280) throw new Error("joke too long");
+
+fs.mkdirSync(OUT_DIR, { recursive: true });
+fs.writeFileSync(OUT_DIR + "/entry.txt", line, "utf8");
